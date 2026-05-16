@@ -1,0 +1,48 @@
+{% extends "admin_layout.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Dashboard</h2>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <a href="/add-category" class="text-decoration-none">
+                <div class="card shadow p-4 text-center">
+                    <h4>Add Category</h4>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="/add-product" class="text-decoration-none">
+                <div class="card shadow p-4 text-center">
+                    <h4>Add Product</h4>
+                </div>
+            </a>
+        </div>
+
+        
+        <div class="col-md-3">
+            <a href="/manage-category" class="text-decoration-none">
+                <div class="card shadow p-4 text-center">
+                    <h4>Manage Category </h4>
+                </div>
+            </a>
+        </div>
+        
+ <div class="col-md-3">
+            <a href="/manage-product" class="text-decoration-none">
+                <div class="card shadow p-4 text-center">
+                    <h4>Manage Product </h4>
+                </div>
+            </a>
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+</html>
+{% endblock %}

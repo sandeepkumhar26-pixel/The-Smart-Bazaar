@@ -1,0 +1,84 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+
+<!-- CART -->
+<div class="container my-5">
+  <h2 class="text-center fw-bold mb-4">🛒 Your Cart</h2>
+
+  <div class="row">
+    <div class="col-md-8">
+      <ul class="list-group">
+
+        {% if items|length == 0 %}
+          <li class="list-group-item text-center text-muted">
+            Your cart is empty 😔
+          </li>
+        {% endif %}
+
+      {% for item in items %}
+<li class="list-group-item d-flex justify-content-between align-items-center">
+
+  <div class="d-flex align-items-center gap-3">
+
+    <!-- IMAGE -->
+    <img src="{{ url_for('static', filename='uploads/' + item.image) }}"
+         width="60" height="60"
+         style="object-fit: cover; border-radius: 8px;">
+
+    <!-- DETAILS -->
+    <div>
+      <strong>{{ item.name }}</strong><br>
+      <small>₹{{ item.price }}</small>
+    </div>
+
+  </div>
+
+  <!-- QUANTITY CONTROL -->
+  <div class="d-flex align-items-center gap-2">
+
+    <a href="/decrease/{{ item.id }}" class="btn btn-sm btn-danger">-</a>
+
+    <span>{{ item.qty }}</span>
+
+    <a href="/increase/{{ item.id }}" class="btn btn-sm btn-success">+</a>
+
+  </div>
+
+</li>
+{% endfor %}
+      </ul>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="fw-bold">Order Summary</h5>
+          <hr>
+
+          <p class="d-flex justify-content-between">
+            <span>Total Items</span>
+            <span>{{ items|length }}</span>
+          </p>
+
+          <p class="d-flex justify-content-between fw-bold">
+            <span>Total Amount</span>
+            <span>₹{{ total }}</span>
+          </p>
+
+          <a href="/checkout" class="btn btn-success w-100 mt-3">
+            Proceed to Checkout
+          </a>
+
+          <a href="/cartcleared" class="btn btn-danger w-100 mt-2">
+            🗑️ Clear Cart
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}
+{% endblock %}

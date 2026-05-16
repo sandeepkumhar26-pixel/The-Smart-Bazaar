@@ -1,0 +1,35 @@
+<!-- templates/slug.html -->
+{% extends "navbar.html" %}
+{% block content %}
+
+<div class="container my-4">
+
+    <h2 class="text-capitalize mb-4">Products</h2>
+
+    <div class="row">
+
+        {% for p in products %}
+        <div class="col-md-3">
+            <div class="card shadow-sm p-2 mb-4">
+
+                <img src="{{ url_for('static', filename='uploads/' + p.image) }}"
+                     style="height:200px; width:100%; object-fit:cover;">
+
+                <div class="mt-2">
+                    <h6>{{ p.name }}</h6>
+                    <p class="text-success fw-bold">₹{{ p.price }}</p>
+
+                    <a href="/product/{{ p.id }}" class="btn btn-primary btn-sm w-100">
+                        View Product
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet" />
+</head>
+
+<body>
+    <section id="header">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/dashboard">CodeMines Admin</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/dashboard">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/category">Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/product">Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="POST" action="/logout">
+                                <input type="submit" value="Logout" class="nav-link" />
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <label>Welcome {{g.username}}</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+    {% block content %}
+    {% endblock %}
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-1 mb-md-0">&copy; 2026 All Rights Reserved.</p>
+            <small class="d-block mt-1">
+                Designed &amp; Developed by <strong>CodeMines</strong>
+            </small>
+        </div>
+    </footer>
+
+</body>
+
+</html>

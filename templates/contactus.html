@@ -1,0 +1,103 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow">
+        <div class="card-body p-4">
+
+          <h2 class="text-center mb-4">Contact-us</h2>
+
+          <div class="row">
+            <div class="col-md-6">
+              <!-- form id added -->
+              <form id="contactForm" action="/contactus" method="POST" onsubmit="return validateForm()">
+                
+                <div class="mb-3">
+                  <label class="form-label">Full Name</label>
+                  <input type="text" id="fullName" name="name" class="form-control" placeholder="Enter your name"
+                  oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')"
+                  required>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Email Address</label>
+                  <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Message</label>
+                  <textarea id="message" name="message" class="form-control" rows="4" placeholder="Write your message" required></textarea>
+                </div>
+
+                <!-- button fixed -->
+                <button  type="submit" class="btn btn-primary w-100">
+                  Send Message
+                </button>
+
+              </form>
+            </div>
+
+            <div class="col-md-6">
+              <h5>Get in Touch</h5>
+              <p class="text-muted">
+                Shopping ho ya support, hum saath hain
+              </p>
+
+              <ul class="list-unstyled">
+                <li><strong>📍 Address:</strong> Mumbai, India</li>
+                <li><strong>📧 Email:</strong> thesmartbazaar@gmail.com</li>
+                <li><strong>📞 Phone:</strong> +91 91753 92813</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function validateForm() {
+  let name = document.getElementById("fullName").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let message = document.getElementById("message").value.trim();
+
+  // ❌ name empty
+  if (name === "") {
+    alert("Please enter your full name");
+    return false;
+  }
+
+  // ❌ number check in name
+  let namePattern = /^[A-Za-z\s]+$/;
+  if (!namePattern.test(name)) {
+    alert("Name should not contain numbers or special characters");
+    return false;
+  }
+
+  // email validation
+  if (email === "") {
+    alert("Please enter your email");
+    return false;
+  }
+
+  if (!email.includes("@")) {
+    alert("Please enter a valid email");
+    return false;
+  }
+
+  // message validation
+  if (message === "") {
+    alert("Please enter your message");
+    return false;
+  }
+
+  return true;
+}
+</script>
+
+{% include "footer.html" %}
+{% endblock %}

@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <title>category</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"> <img src="/static/images/tsb.jpg" style="width:100px;height:100px ;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Registration</a>
+                    </li>
+
+                </ul>
+                <span class="navbar-text">
+                    <nav class="navbar bg-body-tertiary">
+                        <div class="container-fluid">
+                            <a class="navbar-brand"></a>
+                            <form class="d-flex" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Search"
+                                    aria-label="Search" />
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </nav>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="div-add-new-category" style="margin-top: 2%;margin-bottom: 2%;">
+            <a href="manage-category?id=-1" class="btn btn-primary">Add New Category</a>
+        </div>
+        <div class="div-category-list">
+            <div class="col-xl-12">
+                <div class="row">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Id</td>
+                            <td>Name</td>
+                            <td>Action</td>
+                        </tr>
+                        {% for data in category_data %}
+                        <tr>
+                            <td>
+                                {{data["ID"]}}
+                            </td>
+                            <td>
+                                {{data["Name"]}}
+                            </td>
+                            <td>
+                                <a href="manage-category?id={{data['id']}}">Edit</a> &nbsp;&nbsp;
+                                <a href="delete-category?id={{data['id']}}">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+        </ul>
+        <p class="text-center text-body-secondary">&copy; 2025 Company, Inc
+            <br>
+            By Sandeep
+        </p>
+    </footer>
+    </div>
+
+</body>
+
+</html>

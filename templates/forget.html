@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forgot Password | The Smart Bazaar</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #f4f6f9;
+    }
+    .forgot-box {
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .forgot-box h3 {
+      color: #0d6efd;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="forgot-box">
+  <h3 class="fw-bold mb-3">Forgot Password?</h3>
+  <p class="text-muted mb-4">
+    Enter your registered email or mobile number to reset your password.
+  </p>
+
+  <form id="forgotForm" onsubmit="return validateForgot()">
+    
+    <!-- EMAIL / PHONE -->
+    <div class="mb-3">
+      <label class="form-label">Email or Mobile Number</label>
+      <input type="text" id="userInput" class="form-control" placeholder="Enter email or phone">
+      <small id="errorMsg" class="text-danger"></small>
+    </div>
+
+    <!-- BUTTON -->
+    <button type="submit" class="btn btn-primary w-100">
+      Send Reset Link
+    </button>
+
+    <div class="text-center mt-3">
+      <a href="/login" class="text-decoration-none">Back to Login</a>
+    </div>
+  </form>
+</div>
+
+<!-- JS Validation -->
+<script>
+function validateForgot() {
+  let input = document.getElementById("userInput").value.trim();
+  let error = document.getElementById("errorMsg");
+  error.innerText = "";
+
+  if (input === "") {
+    error.innerText = "Email or mobile number is required";
+    return false;
+  }
+
+  // Simple email regex check
+  let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // Simple 10-digit phone regex
+  let phoneRegex = /^[0-9]{10}$/;
+
+  if (!emailRegex.test(input) && !phoneRegex.test(input)) {
+    error.innerText = "Enter a valid email or 10-digit phone number";
+    return false;
+  }
+
+  alert("✅ Reset link sent successfully!");
+  return true;
+}
+</script>
+
+</body>
+</html>

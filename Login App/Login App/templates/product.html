@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet" />
+</head>
+
+<body>
+    <h1>Product List</h1>
+    <div>
+        <a href="/manage-product?id=-1" class="btn btn-success">Add New Product</a>
+    </div>
+    <table class="table table-bordered">
+        <tr>
+            <td>
+                Id
+            </td>
+            <td>
+                Name
+            </td>
+            <td>
+                Image
+            </td>
+            <td>
+                Category Name
+            </td>
+            <td>
+                Amount
+            </td>
+            <td>
+                Description
+            </td>
+            <td>
+                Action
+            </td>
+        </tr>
+        {% for i in data %}
+        <tr>
+            <td>
+                {{i.id}}
+            </td>
+            <td>
+                {{i.name}}
+            </td>
+            <td>
+                <img src="upload/{{i.productImage}}" width="150" height="150"/>
+            </td>
+            <td>
+                {{i.categoryName}}
+            </td>
+            <td>
+                {{i.amount}}
+            </td>
+            <td>
+                {{i.description}}
+            </td>
+            <td>
+                <a href="/manage-product?id={{i.id}}" class="btn btn-success">Edit</a>
+                &nbsp;&nbsp;&nbsp;
+                <a href="/delete-product?id={{i.id}}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>

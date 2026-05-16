@@ -1,0 +1,192 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>The Smart Bazaar</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    /* HERO */
+    .hero {
+      height: 420px;
+      background: url('/static/images/hero.jpg') center/cover no-repeat;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+    }
+
+    /* CATEGORY */
+    .cat-img {
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .cat-card {
+      transition: 0.3s;
+    }
+
+    .cat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* PRODUCT */
+    .product-img {
+      height: 180px;
+      object-fit: cover;
+    }
+  </style>
+  <style>
+    .bg-image {
+      height: 450px;
+      background-image: url('/static/images/tsb.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .bg-image::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+    }
+
+    .bg-image .container {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">The Smart Bazaar</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="/index">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/aboutus">About-us</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contactus">Contact-US</a></li>
+
+          <li class="nav-item"><a class="nav-link" href="/addproduct"> Add Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/shop"> Add Category</a></li>
+
+          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+        </ul>
+       
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- HERO -->
+  <!-- HERO SECTION -->
+  <section class="bg-image d-flex align-items-center text-center text-white">
+    <div class="container">
+      <h1 class="display-4 fw-bold">Welcome to The Smart Bazaar</h1>
+      <p class="lead">Your one-stop online shopping destination</p>
+      <a href="#products" class="btn btn-warning btn-lg mt-3">Shop Now</a>
+    </div>
+  </section>
+
+
+  <!-- SHOP BY CATEGORY -->
+  <section id="categories" class="py-5">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-4">Shop by Category</h2>
+
+      <div class="row g-3">
+        
+
+
+        
+        <div class="col-6 col-md-3 col-lg-2">
+          <div class="card cat-card text-center">
+            <div class="card-body p-2">
+              <h6 class="mb-1">Electronics</h6>
+              <a href="/category" class="btn btn-sm btn-primary">View</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-6 col-md-3 col-lg-2">
+          <div class="card cat-card text-center">
+            <div class="card-body p-2">
+              <h6 class="mb-1">Fashion</h6>
+              <a href="/category" class="btn btn-sm btn-primary">View</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-6 col-md-3 col-lg-2">
+          <div class="card cat-card text-center">
+            <div class="card-body p-2">
+              <h6 class="mb-1">Jewelery</h6>
+              <a href="/category" class="btn btn-sm btn-primary">View</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-6 col-md-3 col-lg-2">
+          <div class="card cat-card text-center">
+            <div class="card-body p-2">
+              <h6 class="mb-1">Books</h6>
+              <a href="/category" class="btn btn-sm btn-primary">View</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-6 col-md-3 col-lg-2">
+          <div class="card cat-card text-center">
+            <div class="card-body p-2">
+              <h6 class="mb-1">Sports</h6>
+              <a href="/category" class="btn btn-sm btn-primary">View</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-6 col-md-3 col-lg-2">
+          <div class="card cat-card text-center">
+            <div class="card-body p-2">
+              <h6 class="mb-1">Home &amp; Kitchen</h6>
+              <a href="/category" class="btn btn-sm btn-primary">View</a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+    <!-- FOOTER -->
+  <footer class="bg-dark text-white text-center py-3">
+    <p class="mb-1">&copy; 2025 The Smart Bazaar</p>
+    <i class="bi bi-facebook me-2"></i>
+    <i class="bi bi-instagram me-2"></i>
+    <i class="bi bi-twitter"></i> By Sandeep Kumhar
+  </footer>
+</body>
+</html>
+

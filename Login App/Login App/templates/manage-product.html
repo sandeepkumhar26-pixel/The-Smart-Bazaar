@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet" />
+</head>
+<body>
+    <h2>Manage Product</h2>
+    <form method="POST" action="manage-product" enctype="multipart/form-data">
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    Name:
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="productName" value="{{product_data.name}}"/>
+                    <input type="hidden" name="pid" value="{{product_data.id}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Category:
+                </td>
+                <td>
+                    <select name="categoryName">
+                        <option value="">--Select Option --</option>
+                        {% for category in categories %}
+                            <option value="{{category.id}}" {{ "selected" if product_data.category_id==category.id else "" }}>{{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Amount:
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="amount" value="{{product_data.price}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Upload:
+                </td>
+                <td>
+                    <input type="file" class="form-control" name="productImage"/>
+                    <img src="upload/{{product_data.image}}" height="100" width="100"/>
+                    <input type="hidden" name="filename" value="{{product_data.image}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Description:
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="productDesc" value="{{product_data.description}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

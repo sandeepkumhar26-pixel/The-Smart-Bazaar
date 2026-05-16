@@ -1,0 +1,168 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+.hero {
+  height: 420px;
+  background: url('{{ url_for("static", filename="images/hero.jpg") }}') center/cover no-repeat;
+  position: relative;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+}
+.hero-content { position: relative; z-index: 2; color: #fff; }
+
+.cat-card { transition:0.3s; }
+.cat-card:hover { transform: translateY(-5px); }
+
+.product-img {
+  height: 180px;
+  object-fit: contain;
+}
+.bg-image {
+  height:450px;
+  background:url('{{ url_for("static", filename="images/tsb.png") }}') center/cover no-repeat;
+  position:relative;
+}
+.bg-image::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+}
+.bg-image .container { position:relative; z-index:1; }
+</style>
+
+<!-- HERO -->
+<section class="bg-image d-flex align-items-center text-center text-white">
+  <div class="container">
+    <h1 class="display-4 fw-bold">Welcome to The Smart Bazaar</h1>
+    <p class="lead">Your one-stop online shopping destination</p>
+    <a href="#products" class="btn btn-warning btn-lg mt-3">Shop Now</a>
+  </div>
+</section>
+
+<!-- CATEGORY -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-4">Shop by Category</h2>
+
+    <div class="row g-3">
+      {% set categories = [
+      ('1','Electronics'),
+      ('27','Fashion'),
+      ('35','Jewellery'),
+      ('32','Books'),
+      ('34','Sports'),
+      ('31','Home & Furniture')
+      
+      ] %}
+
+      {% for slug, name in categories %}
+      <div class="col-6 col-md-3 col-lg-2">
+        <div class="card cat-card text-center">
+          <div class="card-body p-2">
+            <h6>{{ name }}</h6>
+<a href="/category/{{ slug }}" class="btn btn-sm btn-primary">
+  View
+</a>          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-4">Trending Products</h2>
+
+    <div class="row g-4">
+      {% for p in products %}
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100">
+
+          <a href="/product/{{ p.id }}">
+  <img src="{{ url_for('static', filename='uploads/' + p.image) }}"
+       class="product-img card-img-top">
+</a>
+          <div class="card-body text-center">
+           <h5>
+  <a href="/product/{{ p.id }}" style="text-decoration:none; color:black;">
+    {{ p.name }}
+  </a>
+</h5>
+            <p class="small text-muted">{{ p.description }}</p>
+            <h6 class="fw-bold">₹{{ p.price }}</h6>
+
+            <!-- ADD TO CART (Toast only) -->
+            <button onclick="addToCart({{ p.id }})"
+                    class="btn btn-warning btn-sm mt-2">
+              Add to Cart
+            </button>
+
+            <!-- BUY NOW -->
+            <a href="/buy-now/{{ p.id }}"
+               class="btn btn-success btn-sm mt-2">
+              Buy Now
+            </a>
+
+
+            
+          </div>
+        </div>
+      </div>
+      
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+
+<!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="cartToast" class="toast text-bg-success">
+    <div class="toast-body">
+      Added to cart
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function addToCart(pid){
+  fetch(`/add-to-cart/${pid}`)
+  .then(res => res.json())
+  .then(data => {
+
+    if(data.status === "login_required"){
+      window.location.href = "/login";
+    }
+
+    if(data.status === "success"){
+      showToast("🛒 Added to cart!");
+    }
+  });
+}
+
+function showToast(msg){
+  const toastEl = document.getElementById('cartToast');
+  toastEl.querySelector('.toast-body').innerText = msg;
+
+  const toast = new bootstrap.Toast(toastEl);
+  toast.show();
+}
+</script>
+
+{% include "footer.html" %}
+{% endblock %}

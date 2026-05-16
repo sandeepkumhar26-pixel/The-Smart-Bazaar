@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet" />
+</head>
+
+<body>
+    <h1>Login page</h1>
+    <div class="container">
+        <form method="POST" action="/user-login">
+            <table class="table table-bordered">
+                <tr>
+                    <td>
+                        Username:
+                    </td>
+                    <td>
+                        <input type="text" name="username" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Password:
+                    </td>
+                    <td>
+                        <input type="password" name="password" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                    <td>
+                        <input type="submit" value="Submit" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div>
+            {{message}}
+        </div>
+
+    </div>
+
+</body>
+
+</html>

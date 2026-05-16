@@ -1,0 +1,30 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+<div class="container mt-4">
+  <h3>Edit Product</h3>
+
+  <form method="POST" enctype="multipart/form-data">
+
+    <input type="text" name="name" value="{{ product.name }}" class="form-control mb-2" required>
+
+    <input type="number" name="price" value="{{ product.price }}" class="form-control mb-2" required>
+
+    <textarea name="description" class="form-control mb-2">{{ product.description }}</textarea>
+
+    <select name="category" class="form-control mb-2">
+      {% for c in categories %}
+      <option value="{{ c.id }}" {% if c.id == product.category_id %}selected{% endif %}>
+        {{ c.name }}
+      </option>
+      {% endfor %}
+    </select>
+
+    <input type="file" name="image" class="form-control mb-2">
+
+    <button class="btn btn-success">Update Product</button>
+
+  </form>
+</div>
+
+{% endblock %}

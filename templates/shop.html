@@ -1,0 +1,46 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+<style>
+.category-card {
+    border-radius: 15px;
+    transition: 0.3s;
+}
+.category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.category-img {
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+</style>
+
+<div class="container py-4">
+    <div class="row g-4">
+
+        {% for cat in category_data %}
+        <div class="col-md-3">
+            <div class="card category-card text-center p-3">
+
+                <!-- IMAGE -->
+                <img src="/static/images/{{cat.image}}" class="category-img">
+
+                <!-- NAME -->
+                <h5 class="mt-3">{{ cat.name }}</h5>
+
+                <!-- BUTTON -->
+                <a href="/category/{{cat.id}}" class="btn btn-primary btn-sm mt-2">
+                    Shop Now
+                </a>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% include "footer.html" %}
+
+{% endblock %}

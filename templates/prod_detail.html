@@ -1,0 +1,350 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body { background:#f1f3f6; }
+
+.box {
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+}
+
+.product-img {
+  width:100%;
+  height:400px;
+  object-fit:contain;
+}
+
+.thumb {
+  width:70px;
+  height:70px;
+  border:1px solid #ddd;
+  padding:5px;
+  cursor:pointer;
+}
+.related-box {
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.related-box:hover {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.related-img {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+}
+
+.related-name {
+  font-size: 14px;
+  font-weight: 500;
+  height: 38px;
+  overflow: hidden;
+}
+
+.related-desc {
+  font-size: 12px;
+  color: gray;
+  height: 32px;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 15px;
+  padding: 10px 0;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  min-width: 180px;
+  background: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.item:hover {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.item img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+}
+
+.name {
+  font-size: 17px;
+  height: 35px;
+  overflow: hidden;
+  PADDING-TOP: 8%;
+}
+
+.price {
+  font-weight: bold;
+}
+
+/* arrows */
+.nav-btn {
+  position: absolute;
+  top: 40%;
+  background: #fff;
+  border: none;
+  width: 35px;
+  height: 35px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.left { left: -10px; }
+.right { right: -10px; }
+
+.price { font-size:28px; font-weight:600; }
+.old { text-decoration:line-through; color:gray; }
+.off { color:green; }
+
+.btn-cart { background:#ff9f00; color:#fff; width:48%; }
+.btn-buy { background:#fb641b; color:#fff; width:48%; }
+
+.sticky-box { position:sticky; top:80px; }
+</style>
+
+<div class="container mt-4">
+<div class="row g-4">
+
+<!-- LEFT -->
+<div class="col-md-5">
+  <div class="box sticky-box">
+
+    <!-- IMAGE WRAPPER -->
+    <div style="position:relative;">
+
+      <!-- WISHLIST ICON -->
+      <button onclick="addWishlist({{ product.id }})"
+              id="wishBtn"
+              style="
+              position:absolute;
+              top:15px;
+              right:15px;
+              background:white;
+              width:48px;
+              height:48px;
+              border:none;
+              border-radius:50%;
+              font-size:22px;
+              box-shadow:0 2px 10px rgba(0,0,0,0.2);
+              z-index:100;
+              transition:0.2s;">
+
+          🤍
+
+      </button>
+
+      <!-- MAIN IMAGE -->
+      <img id="mainImg"
+           src="{{ url_for('static', filename='uploads/' + product.image.split(',')[0]) }}"
+           class="product-img">
+
+    </div>
+
+    <!-- GALLERY -->
+    <div class="d-flex gap-2 mt-3">
+      {% for img in product.image.split(',') %}
+      <img src="{{ url_for('static', filename='uploads/' + img) }}"
+           class="thumb"
+           onclick="changeImg(this)">
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="col-md-7">
+  <div class="box">
+
+    <h4>{{ product.name }}</h4>
+    
+    <!-- CATEGORY -->
+    <p class="text-muted">Category: {{ product.category_name }}</p>
+
+    <!-- RATING -->
+    <div>⭐⭐⭐⭐☆ <span class="text-muted">(245 ratings)</span></div>
+
+    <!-- PRICE -->
+    <div class="mt-2">
+      <span class="price">₹{{ product.price }}</span>
+      <span class="old ms-2">₹{{ product.price + 1500 }}</span>
+      <span class="off ms-2">18% off</span>
+    </div>
+
+    <!-- STOCK -->
+    {% if product.stock and product.stock < 5 %}
+      <p class="text-danger mt-2">🔥 Only {{ product.stock }} left!</p>
+    {% endif %}
+
+       <!-- DESCRIPTION -->
+    <h6 class="mt-4">Description</h6>
+    <p>{{ product.description }}</p>
+
+    <!-- OFFERS -->
+    <h6 class="mt-3">Available Offers</h6>
+    <ul>
+      <li>💳 10% discount on cards</li>
+      <li>⚡ No Cost EMI</li>
+      <li>🚚 Free delivery</li>
+    </ul>
+
+    <!-- DELIVERY -->
+<div class="mt-3">
+  <input type="text" id="pincode" placeholder="Enter Pincode"
+         class="form-control w-50 d-inline">
+
+  <button onclick="checkPincode()" 
+          class="btn btn-outline-primary btn-sm">
+    Check
+  </button>
+
+  <p id="pinResult" class="mt-2"></p>
+     <div class="d-flex justify-content-between mt-4">
+      <button onclick="addToCart({{ product.id }})"
+              class="btn btn-cart btn-lg">🛒 Add to Cart</button>
+
+      <a href="/buy-now/{{ product.id }}"
+         class="btn btn-buy btn-lg">⚡ Buy Now</a>
+    </div>
+
+
+</div>      
+    </div>
+
+    
+  </div>
+</div>
+
+</div>
+
+<h5 class="mt-5 mb-3 fw-bold" style="text-align: center; font-size: 30;">Similar Products</h5>
+
+<div class="position-relative">
+
+  
+
+  <!-- SCROLL CONTAINER -->
+  <div class="slider" id="slider">
+
+    {% for r in related %}
+    <div class="item" style="margin-left: 3.5%; ">
+
+      <a href="/product/{{ r.id }}">
+        <img src="{{ url_for('static', filename='uploads/' + r.image.split(',')[0]) }}">
+      </a>
+
+      <div class="mt-2">
+        <p class="name">{{ r.name }}</p>
+        <div class="price">₹{{ r.price }}</div>
+      </div>
+
+    </div>
+    {% endfor %}
+
+  </div>
+
+  
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="cartToast" class="toast text-bg-success">
+    <div class="toast-body">Added to cart</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function addToCart(pid){
+  fetch(`/add-to-cart/${pid}`)
+  .then(res => res.json())
+  .then(data => {
+    if(data.status==="success"){
+      showToast("🛒 Added to cart!");
+    }
+  });
+}
+
+function showToast(msg){
+  const t = document.getElementById('cartToast');
+  t.querySelector('.toast-body').innerText = msg;
+  new bootstrap.Toast(t).show();
+}
+
+function changeImg(el){
+  document.getElementById("mainImg").src = el.src;
+}
+function checkPincode(){
+  let pin = document.getElementById("pincode").value;
+  let result = document.getElementById("pinResult");
+
+  // dummy data
+  if(pin == "400001"){
+    result.innerHTML = "📍 Mumbai - Delivery in 2 days";
+    result.className = "text-success mt-2";
+  }
+  else if(pin == "110001"){
+    result.innerHTML = "📍 Delhi - Delivery in 3 days";
+    result.className = "text-success mt-2";
+  }
+  else{
+    result.innerHTML = "❌ Not Deliverable";
+    result.className = "text-danger mt-2";
+  }
+
+}
+</script>
+<script>
+
+function addWishlist(pid){
+
+  fetch("/add-wishlist/" + pid)
+  .then(res => res.json())
+  .then(data => {
+
+      if(data.status == "success"){
+
+          // HEART CHANGE
+          document.getElementById("wishBtn").innerHTML = "❤️";
+
+          // TOAST
+          showToast("❤️ Added to wishlist!");
+
+      }
+
+  });
+
+}
+
+</script>
+{% include "footer.html" %}
+{% endblock %}
