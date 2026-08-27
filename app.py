@@ -1,13 +1,16 @@
 from flask import Flask, render_template, session, request, redirect, url_for, flash, jsonify
 import pymysql
+from dotenv import load_dotenv
+import os
 import os
 import random
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 import razorpay
 
-
+load_dotenv()
 app = Flask(__name__)
-app.secret_key = "secret123"
+app.secret_key = os.getenv("SECRET_KEY")
 
 UPLOAD_FOLDER = "static/uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -15,13 +18,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # ---------------- DB ----------------
 def db():
     return pymysql.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="the_smart_bazaar",
+        host=os.environ.get("DB_HOST"),
+        user=os.environ.get("DB_USER"),
+        password=os.environ.get("DB_PASSWORD"),
+        database=os.environ.get("DB_NAME"),
         cursorclass=pymysql.cursors.DictCursor
     )
-
 # ---------------- HOME ----------------
 @app.route("/")
 def index():
@@ -47,10 +49,17 @@ def register():
         conn = db()
         cur = conn.cursor()
         try:
+            password = generate_password_hash(request.form["password"])
+
             cur.execute(
-                "INSERT INTO tsb_regs_record(fullname,email,mobile,password) VALUES(%s,%s,%s,%s)",
-                (request.form["fullname"], request.form["email"], request.form["mobile"], request.form["password"])
-            )
+        "INSERT INTO tsb_regs_record(fullname,email,mobile,password) VALUES(%s,%s,%s,%s)",
+        (
+            request.form["fullname"],
+            request.form["email"],
+            request.form["mobile"],
+            password
+        )
+)
             conn.commit()
             conn.close()
             return redirect("/login")
@@ -66,17 +75,18 @@ def login():
         conn = db()
         cur = conn.cursor()
         cur.execute(
-            "SELECT * FROM tsb_regs_record WHERE email=%s AND password=%s",
-            (request.form["email"], request.form["password"])
+            "SELECT * FROM tsb_regs_record WHERE email=%s",
+            (request.form["email"],)
         )
         user = cur.fetchone()
         conn.close()
 
-        if user:
+        if user and check_password_hash(user["password"], request.form["password"]):
             session["user"] = user["id"]
             return redirect("/")
         else:
             flash("Invalid Email or Password")
+
     return render_template("login.html")
 
 @app.route("/logout")
@@ -314,8 +324,8 @@ def checkout():
     return render_template("checkout.html", products=products, total=total)
 
 
-KEY_ID = "rzp_test_Sk8VXld7HBr552"
-SECRET = "yLH6m278qbSRpbP47Fn36oGD"
+KEY_ID = os.getenv("RAZORPAY_KEY")
+SECRET = os.getenv("RAZORPAY_SECRET")
 
 client = razorpay.Client(auth=(KEY_ID, SECRET))
 
@@ -856,4 +866,4 @@ def edit_product(id):
 
 # ---------------- RUN ----------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
