@@ -17,9 +17,32 @@
   <div class="container-fluid px-4">
 
     <!-- LOGO -->
-    <a class="navbar-brand fw-bold fs-3" href="/">
+    <a class="navbar-brand fw-bold fs-5 fs-lg-3 text-nowrap" href="/">
       The Smart Bazaar
     </a>
+
+    <!-- SEARCH (always visible, even on mobile) -->
+    <form action="/search"
+          method="GET"
+          class="d-flex flex-grow-1 mx-2 mx-lg-4"
+          style="max-width:500px;">
+
+      <input
+        type="text"
+        name="q"
+        class="form-control rounded-start-pill border-0 shadow-sm"
+        placeholder="Search for products, brands and more..."
+        style="height:45px;">
+
+      <button
+        class="btn btn-warning rounded-end-pill px-3 fw-bold"
+        type="submit">
+
+        <i class="bi bi-search"></i>
+
+      </button>
+
+    </form>
 
     <!-- MOBILE TOGGLE -->
     <button class="navbar-toggler"
@@ -33,29 +56,6 @@
 
     <!-- NAVBAR -->
     <div class="collapse navbar-collapse" id="nav">
-
-      <!-- SEARCH -->
-      <form action="/search"
-            method="GET"
-            class="d-flex my-2 my-lg-0 mx-lg-auto"
-            style="width:100%; max-width:500px;">
-
-        <input
-          type="text"
-          name="q"
-          class="form-control rounded-start-pill border-0 shadow-sm"
-          placeholder="Search for products, brands and more..."
-          style="height:45px;">
-
-        <button
-          class="btn btn-warning rounded-end-pill px-4 fw-bold"
-          type="submit">
-
-          Search 
-
-        </button>
-
-      </form>
 
       <!-- NAV LINKS -->
       <ul class="navbar-nav align-items-lg-center ms-auto gap-lg-2">
